@@ -9,6 +9,9 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool movingRight = true;
 
+    bool isJumping = false;
+    float jumpSpeed = 0f;
+
     [SerializeField]
     Transform upperBodyCheckA = null;
     [SerializeField]
@@ -17,48 +20,84 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     Transform groundCheckA = null;
     [SerializeField]
     Transform groundCheckB = null;
+
     [SerializeField]
     LayerMask groundLayers;
+
+    Transform myTransform;
+    Rigidbody2D myRigidbody;
 
     private void Start()
     {
         controller.HorizontalInput = 4f;
+
         groundLayers = LayerMask.GetMask("Ground");
+
+        myTransform = transform;
+        myRigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void Update()
     {
-        CheckGround();
-        CheckWall();
-    }
-
-    void CheckGround()
-    {
-        if (!Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider)
+        if (!isJumping)
         {
-            TurnAround();
+            if (CheckGround() && CheckJumpableWall() && !(jumpSpeed > 0f))
+            {
+                Jump();
+            }
+            else if (!CheckGround() || CheckWall())
+            {
+                TurnAround();
+            }
         }
     }
 
-    void CheckWall()
+    bool CheckGround()
+    {
+        if (Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.1f, groundLayers).collider)
+        {
+            isJumping = false;
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckWall()
     {
         if (Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider || Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider)
         {
-            TurnAround();
+            return true;
         }
+        return false;
     }
 
-    private void TurnAround()
+    bool CheckJumpableWall()
+    {
+        if (ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider, null) && Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 1f, groundLayers).collider)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void TurnAround()
     {
         if (movingRight == true)
         {
-            transform.eulerAngles = new Vector3(0, -180, 0);
+            myTransform.eulerAngles = new Vector3(0, -180, 0);
             movingRight = false;
         }
         else
         {
-            transform.eulerAngles = new Vector3(0, 0, 0);
+            myTransform.eulerAngles = new Vector3(0, 0, 0);
             movingRight = true;
         }
+    }
+
+    void Jump()
+    {
+        isJumping = true;
+        jumpSpeed = 6f;
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpSpeed);
     }
 }
