@@ -8,8 +8,11 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     IPLCharacterController2D controller = null;
 
     bool movingRight = true;
-    bool isGrounded = false;
 
+    [SerializeField]
+    Transform upperBodyCheckA = null;
+    [SerializeField]
+    Transform lowerBodyCheckA = null;
     [SerializeField]
     Transform groundCheckA = null;
     [SerializeField]
@@ -26,12 +29,20 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     private void Update()
     {
         CheckGround();
+        CheckWall();
     }
 
     void CheckGround()
     {
-        isGrounded = Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider != null;
-        if (!isGrounded)
+        if (!Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider)
+        {
+            TurnAround();
+        }
+    }
+
+    void CheckWall()
+    {
+        if (Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider || Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider)
         {
             TurnAround();
         }
