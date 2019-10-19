@@ -23,6 +23,8 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     [SerializeField]
     LayerMask groundLayers;
+    [SerializeField]
+    LayerMask enemyLayers;
 
     Transform myTransform;
     Rigidbody2D myRigidbody;
@@ -32,6 +34,7 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
         controller.HorizontalInput = 4f;
 
         groundLayers = LayerMask.GetMask("Ground");
+        enemyLayers = LayerMask.GetMask("Enemies");
 
         myTransform = transform;
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -45,7 +48,7 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
             {
                 Jump();
             }
-            else if (!CheckGround() || CheckWall())
+            else if (!CheckGround() || CheckWall() || CheckEnemy())
             {
                 TurnAround();
             }
@@ -74,6 +77,15 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     bool CheckJumpableWall()
     {
         if (ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider, null) && Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 1f, groundLayers).collider)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    bool CheckEnemy()
+    {
+        if (Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, enemyLayers).collider)
         {
             return true;
         }
