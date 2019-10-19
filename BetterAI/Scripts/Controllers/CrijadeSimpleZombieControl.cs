@@ -8,42 +8,57 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     IPLCharacterController2D controller = null;
 
     bool movingRight = true;
-    bool isGrounded = false;
 
+    [SerializeField]
+    Transform upperBodyCheckA = null;
+    [SerializeField]
+    Transform lowerBodyCheckA = null;
     [SerializeField]
     Transform groundCheckA = null;
     [SerializeField]
     Transform groundCheckB = null;
     [SerializeField]
-    LayerMask groundLayers = 8  ;
+    LayerMask groundLayers;
 
     private void Start()
     {
         controller.HorizontalInput = 4f;
+        groundLayers = LayerMask.GetMask("Ground");
     }
 
     private void Update()
     {
         CheckGround();
+        CheckWall();
     }
 
     void CheckGround()
     {
-        isGrounded = Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f).collider != null;
-        if (!isGrounded)
+        if (!Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider)
         {
-            {
-                if (movingRight == true)
-                {
-                    transform.eulerAngles = new Vector3(0, -180, 0);
-                    movingRight = false;
-                }
-                else
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    movingRight = true;
-                }
-            }
+            TurnAround();
+        }
+    }
+
+    void CheckWall()
+    {
+        if (Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider || Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider)
+        {
+            TurnAround();
+        }
+    }
+
+    private void TurnAround()
+    {
+        if (movingRight == true)
+        {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            movingRight = false;
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            movingRight = true;
         }
     }
 }
