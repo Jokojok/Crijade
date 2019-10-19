@@ -30,7 +30,6 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     void CheckGround()
     {
-        Debug.Log(groundLayers);
         isGrounded = Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider != null;
         if (!isGrounded)
         {
