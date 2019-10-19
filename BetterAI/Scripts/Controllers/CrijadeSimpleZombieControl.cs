@@ -15,11 +15,12 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
     [SerializeField]
     Transform groundCheckB = null;
     [SerializeField]
-    LayerMask groundLayers = 8  ;
+    LayerMask groundLayers;
 
     private void Start()
     {
         controller.HorizontalInput = 4f;
+        groundLayers = LayerMask.GetMask("Ground");
     }
 
     private void Update()
@@ -29,21 +30,24 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     void CheckGround()
     {
-        isGrounded = Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f).collider != null;
+        isGrounded = Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.5f, groundLayers).collider != null;
         if (!isGrounded)
         {
-            {
-                if (movingRight == true)
-                {
-                    transform.eulerAngles = new Vector3(0, -180, 0);
-                    movingRight = false;
-                }
-                else
-                {
-                    transform.eulerAngles = new Vector3(0, 0, 0);
-                    movingRight = true;
-                }
-            }
+            TurnAround();
+        }
+    }
+
+    private void TurnAround()
+    {
+        if (movingRight == true)
+        {
+            transform.eulerAngles = new Vector3(0, -180, 0);
+            movingRight = false;
+        }
+        else
+        {
+            transform.eulerAngles = new Vector3(0, 0, 0);
+            movingRight = true;
         }
     }
 }
