@@ -35,14 +35,15 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
         myRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (CheckGround())
         {
-            if (CheckGround() && CheckJumpableWall())
+            if (CheckJumpableWall())
             {
                 Jump();
             }
+
             else if (CheckFall() || CheckWall() || CheckEnemy())
             {
                 TurnAround();
@@ -52,11 +53,7 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckGround()
     {
-        if (Physics2D.OverlapArea(groundCheckA.position, groundCheckB.position, groundLayers))
-        {
-            return true;
-        }
-        return false;
+        return (Physics2D.OverlapArea(groundCheckA.position, groundCheckB.position, groundLayers)) ;
     }
 
     bool CheckFall()
@@ -70,32 +67,29 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckWall()
     {
-        if (Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider 
-            || Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider)
-        {
-            return true;
-        }
-        return false;
+        return (
+            Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider ||
+            Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider
+        );
     }
 
     bool CheckJumpableWall()
     {
-        if (ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 1f, groundLayers).collider, null) 
-            && ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.up, 1f, groundLayers).collider, null) 
-            && Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 1f, groundLayers).collider)
-        {
-            return true;
-        }
-        return false;
+        return (
+            ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 1f, groundLayers).collider, null) &&
+            ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.up, 1f, groundLayers).collider, null) &&
+            Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 1f, groundLayers).collider
+        );
     }
 
     bool CheckEnemy()
     {
-        if (Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider)
-        {
-            return true;
-        }
-        return false;
+        print(Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider);
+        print(Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider);
+        return (
+            Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider ||
+            Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider
+        );
     }
 
     void TurnAround()
