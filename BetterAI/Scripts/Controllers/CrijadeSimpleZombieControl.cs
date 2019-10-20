@@ -84,8 +84,6 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckEnemy()
     {
-        print(Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider);
-        print(Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider);
         return (
             Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider ||
             Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider
