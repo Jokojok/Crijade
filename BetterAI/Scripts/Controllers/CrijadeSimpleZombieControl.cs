@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +6,6 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 {
     [SerializeField]
     IPLCharacterController2D controller = null;
-
-    bool movingRight = true;
-
-    bool isJumping = false;
-    float jumpSpeed = 0f;
 
     [SerializeField]
     Transform upperBodyCheckA = null;
@@ -42,13 +37,13 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     private void Update()
     {
-        if (!isJumping)
+        if (CheckGround())
         {
-            if (CheckGround() && CheckJumpableWall() && !(jumpSpeed > 0f))
+            if (CheckGround() && CheckJumpableWall())
             {
                 Jump();
             }
-            else if (!CheckGround() || CheckWall() || CheckEnemy())
+            else if (CheckFall() || CheckWall() || CheckEnemy())
             {
                 TurnAround();
             }
@@ -57,17 +52,26 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckGround()
     {
-        if (Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.1f, groundLayers).collider)
+        if (Physics2D.OverlapArea(groundCheckA.position, groundCheckB.position, groundLayers))
         {
-            isJumping = false;
             return true;
         }
         return false;
     }
 
+    bool CheckFall()
+    {
+        if (Physics2D.Raycast(groundCheckB.position, Vector2.down, 0.1f, groundLayers).collider)
+        {
+            return false;
+        }
+        return true;
+    }
+
     bool CheckWall()
     {
-        if (Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider || Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider)
+        if (Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider 
+            || Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 0.1f, groundLayers).collider)
         {
             return true;
         }
@@ -76,7 +80,9 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckJumpableWall()
     {
-        if (ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, Vector2.right, 0.1f, groundLayers).collider, null) && Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 1f, groundLayers).collider)
+        if (ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 1f, groundLayers).collider, null) 
+            && ReferenceEquals(Physics2D.Raycast(upperBodyCheckA.position, myTransform.up, 1f, groundLayers).collider, null) 
+            && Physics2D.Raycast(lowerBodyCheckA.position, myTransform.right, 1f, groundLayers).collider)
         {
             return true;
         }
@@ -85,7 +91,7 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     bool CheckEnemy()
     {
-        if (Physics2D.Raycast(lowerBodyCheckA.position, Vector2.right, 0.1f, enemyLayers).collider)
+        if (Physics2D.Raycast(upperBodyCheckA.position, myTransform.right, 0.1f, enemyLayers).collider)
         {
             return true;
         }
@@ -94,22 +100,11 @@ public class CrijadeSimpleZombieControl : MonoBehaviour
 
     void TurnAround()
     {
-        if (movingRight == true)
-        {
-            myTransform.eulerAngles = new Vector3(0, -180, 0);
-            movingRight = false;
-        }
-        else
-        {
-            myTransform.eulerAngles = new Vector3(0, 0, 0);
-            movingRight = true;
-        }
+        myTransform.eulerAngles = new Vector3(0, myTransform.eulerAngles.y == 0 ? 180 : 0, 0);
     }
 
     void Jump()
     {
-        isJumping = true;
-        jumpSpeed = 6f;
-        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, jumpSpeed);
+        myRigidbody.velocity = new Vector2(myRigidbody.velocity.x, 6f);
     }
 }
