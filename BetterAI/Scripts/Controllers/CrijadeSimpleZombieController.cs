@@ -24,7 +24,7 @@ public class CrijadeSimpleZombieController : MonoBehaviour
 
     private void Start()
     {
-        controller.HorizontalInput = 4f;
+        controller.HorizontalInput = 1f;
 
         groundLayers = LayerMask.GetMask("Ground");
         enemyLayers = LayerMask.GetMask("Enemies");
