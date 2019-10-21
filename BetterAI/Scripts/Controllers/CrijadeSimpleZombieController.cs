@@ -16,9 +16,7 @@ public class CrijadeSimpleZombieController : MonoBehaviour
     [SerializeField]
     Transform groundCheckB = null;
 
-    [SerializeField]
     LayerMask groundLayers;
-    [SerializeField]
     LayerMask enemyLayers;
 
     Transform myTransform;

@@ -119,12 +119,6 @@ MonoBehaviour:
   lowerBodyCheckA: {fileID: 6533162774545491178}
   groundCheckA: {fileID: 1237454408225213332}
   groundCheckB: {fileID: 1237454407618473370}
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!114 &2362094145200223055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -187,16 +181,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 265823925931706363, guid: bdd8194ebc255aa448e471cdce49fc9e,
-        type: 3}
-      propertyPath: m_Name
-      value: CrijadeZombie
-      objectReference: {fileID: 0}
-    - target: {fileID: 265823925931706363, guid: bdd8194ebc255aa448e471cdce49fc9e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 265823925931706362, guid: bdd8194ebc255aa448e471cdce49fc9e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -252,6 +236,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 265823925931706363, guid: bdd8194ebc255aa448e471cdce49fc9e,
+        type: 3}
+      propertyPath: m_Name
+      value: CrijadeZombie
+      objectReference: {fileID: 0}
+    - target: {fileID: 265823925931706363, guid: bdd8194ebc255aa448e471cdce49fc9e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 265823925931706361, guid: bdd8194ebc255aa448e471cdce49fc9e,
+        type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 265823926296803646, guid: bdd8194ebc255aa448e471cdce49fc9e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8257ae5b0a004b34a8c1c7841b8de952,
+        type: 3}
     - target: {fileID: 265823926523276101, guid: bdd8194ebc255aa448e471cdce49fc9e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -272,10 +277,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -0.929
       objectReference: {fileID: 0}
-    - target: {fileID: 265823925931706361, guid: bdd8194ebc255aa448e471cdce49fc9e,
+    - target: {fileID: 265823924807159156, guid: bdd8194ebc255aa448e471cdce49fc9e,
         type: 3}
-      propertyPath: speed
-      value: 1
+      propertyPath: m_Layer
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 265823926296803640, guid: bdd8194ebc255aa448e471cdce49fc9e,
         type: 3}
@@ -287,17 +292,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 265823924807159156, guid: bdd8194ebc255aa448e471cdce49fc9e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 265823926296803646, guid: bdd8194ebc255aa448e471cdce49fc9e,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 8257ae5b0a004b34a8c1c7841b8de952,
-        type: 3}
     - target: {fileID: 265823926296803644, guid: bdd8194ebc255aa448e471cdce49fc9e,
         type: 3}
       propertyPath: m_Controller
