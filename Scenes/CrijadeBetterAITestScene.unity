@@ -941,7 +941,7 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!1001 &1386904775
+--- !u!1001 &1424203306
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -961,7 +961,7 @@ PrefabInstance:
     - target: {fileID: 5926474106355534612, guid: 2bf8312838afbb246942a3d30345b576,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.655221
+      value: 4.5257063
       objectReference: {fileID: 0}
     - target: {fileID: 5926474106355534612, guid: 2bf8312838afbb246942a3d30345b576,
         type: 3}
@@ -1007,16 +1007,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5926474106652505553, guid: 2bf8312838afbb246942a3d30345b576,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 5926474106652505553, guid: 2bf8312838afbb246942a3d30345b576,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.05
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2bf8312838afbb246942a3d30345b576, type: 3}
